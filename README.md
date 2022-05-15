@@ -5,9 +5,18 @@ This repository is a product of a Master's thesis realized on the Faculty of App
 ## Abstract
 _This work introduces CodeFormer, a Python source code generator pre-trained on a massive GitHub crawl consisting of 230M Python functions. The released model, built on BART architecture, generates Python functions based on descriptions in English. On a CodeSearchNet dataset, the CodeFormer sets a new state of the art with 46.12 BLEU, representing an improvement of 13.86 BLEU. We also release a new parallel corpus for code generation called Stack Overflow Code Generation Dataset (SOCGD), on which our model sets a baseline of 47.68 BLEU. The resulting model is ready to be integrated into a source code suggestion system in an IDE, where it can improve software developers' productivity. During our research, we discovered a better way of training the BART for machine translation. However, the applicability of our approach to other domains must be verified in subsequent work._
 
-![Visualization of the CodeFormer's architecture.](img/code_former_architecture_poster.png)
+![Visualization of the CodeFormer's architecture.](img/code_former_architecture.png)
 
 ## Pre-trained CodeFormer
+
+The pre-trained CodeFormer, which is based on the architecture of BART can be obtained using HuggingFace Transformers, using the following source code:
+
+```Python
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+tokenizer = AutoTokenizer.from_pretrained("janpase97/codeformer-pretrained")
+
+model = AutoModelForSeq2SeqLM.from_pretrained("janpase97/codeformer-pretrained")
+```
 
 ## Fine-tuned CodeFormer
 
