@@ -24,9 +24,27 @@ model = AutoModelForSeq2SeqLM.from_pretrained("janpase97/codeformer-pretrained")
 
 ## Fine-tuned CodeFormer
 
-- CodeFormer (w/ CodeBERT) for CodeSearchNet
-- CodeFormer (w/ CodeBERT) for SOCGD
-- CodeFormer (w/ MQDD) for CoNaLa
+The architecture (see figure above) of a source code generator based on our CodeFormer model consists of a pre-trained CodeFormer ammended with an additional encoder. In our work we use either the CodeBERT or the MQDD as an additional encoder. The implementation of the model can be found in `code_former.py` file, where one can find an implementation of the `CodeFormer` for code generation.
+
+To use the fine-tuned model, it is necessary to download a checkpoint from our GoogleDrive disk. You can select from three different versions of the model, each fine-tuned on a different dataset:  
+
+- [CodeFormer (w/ CodeBERT) for CodeSearchNet](https://drive.google.com/drive/folders/1Cw-Agt8bVCm47bcd04hvxpl8m8hveput?usp=sharing)
+- [CodeFormer (w/ CodeBERT) for SOCGD](https://drive.google.com/drive/folders/14E_I_6AswjyUg1Uw_v5vh7s5MTXXPmcV?usp=sharing)
+- [CodeFormer (w/ MQDD) for CoNaLa](https://drive.google.com/drive/folders/15YiNsADgsGZsrICm35_zrD4QBEqISj57?usp=sharing)
+
+After downloading the selected checkpoint, the model can be instantiated and loaded using the following source code snippet:
+
+```Python
+from code_former import CodeFormer
+
+# TODO Choose correct additional encoder being used (based on the downloaded checkpoint)
+# ADDITIONAL_ENCODER = "UWB-AIR/MQDD-pretrained"
+ADDITIONAL_ENCODER = "microsoft/codebert-base"
+
+model = CodeFormer("janpase97/codeformer-pretrained", ADDITIONAL_ENCODER)
+ckpt = torch.load("model.pt",  map_location="cpu")
+model.load_state_dict(ckpt["model_state_dict"])
+```
 
 ## Stack Overflow Code Generation Dataset (SOCGD)
 
