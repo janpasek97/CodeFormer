@@ -48,6 +48,14 @@ model.load_state_dict(ckpt["model_state_dict"])
 
 ## Stack Overflow Code Generation Dataset (SOCGD)
 
+As a part of our work, we created a new dataset for Python source code generation called **Stack Overflow Code Generation Dataset (SOCGD)**. The dataset is assemled from texts acquired from StackOverflow questions and corresponding source code snippets extracted from the accepted answer related to the question. The dataset contains approximately 400K examples, that can be downloaded from our GoogleDrive [here](https://drive.google.com/file/d/1uvT0PwIP4E_bk8yXIn9qOHCR-pSB87aj/view?usp=sharing).
+
+The dataset consists of a single `*.txt` file, where each line represents a single training example. Each example in the dataset is represented by quetion's title, text extracted from the question's body, and a corresponding source code snippet. Therefore each line of the dataset has the following format:
+
+```
+Question's title<SPLIT>Text from question's body<SPLIT>Source code from an accepted answer<SPLIT>StackOverflow post ID
+```
+
 ## Pre-training Corpus
 
 The whole pre-training corpus consisting of approximately 230M Python function from public GitHub repositories can be dowloaded from the our GoogleDrive folder [here](https://drive.google.com/drive/folders/1giM1LAKlGBV1tfaitJ5ugf4lridKPvWj?usp=sharing). The pre-training corpus is distributed in the form of tokenized input examples. Each `*.dat` file can be loaded using `torch.load()` command, which results in reading a `List` of `torch.Tensor`, where each element represents a single training example. To retrieve the original source codes from the tokenized sequences, one shall use our WordPiece tokenizer, which can be loaded using the first source code snippet presented in this document.
