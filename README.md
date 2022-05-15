@@ -52,6 +52,21 @@ model.load_state_dict(ckpt["model_state_dict"])
 
 The whole pre-training corpus consisting of approximately 230M Python function from public GitHub repositories can be dowloaded from the our GoogleDrive folder [here](https://drive.google.com/drive/folders/1giM1LAKlGBV1tfaitJ5ugf4lridKPvWj?usp=sharing). The pre-training corpus is distributed in the form of tokenized input examples. Each `*.dat` file can be loaded using `torch.load()` command, which results in reading a `List` of `torch.Tensor`, where each element represents a single training example. To retrieve the original source codes from the tokenized sequences, one shall use our WordPiece tokenizer, which can be loaded using the first source code snippet presented in this document.
 
+To use the data directly for pre-training, one can used our implementation of `GithubDataset` from `github_dataset.py`. The usage of the `GithubDataset` is the following:
+
+```Python
+import transformers
+import torch
+
+from github_dataset import GithubDataset
+
+tokenizer = transformers.AutoTokenizer.from_pretrained("janpase97/codeformer-pretrained")
+ds = GithubDataset("<PATH_TO_DATA>", tokenizer)
+loader = torch.utils.data.DataLoader(ds, batch_size=10, shuffle=False, drop_last=True)
+for ex in loader:
+    print(ex)
+```
+
 ## Licence
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. http://creativecommons.org/licenses/by-nc-sa/4.0/
 
